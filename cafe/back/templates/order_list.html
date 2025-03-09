@@ -40,8 +40,8 @@
                 </p>
                 <p>Общая стоимость: {{ order.total_price }} руб.</p>
                 <p>Статус: {{ order.get_status_display  }}</p>
-                <a href="{% url 'update_status' cafe.id%}" class="btn btn-warning">Изменить статус</a>
-                <a href="{% url 'delete_order' cafe.id %}" class="btn btn-danger">Удалить</a>
+                <a href="{% url 'update_status' order.id %}" class="btn btn-warning">Изменить статус</a>
+                <a href="{% url 'delete_order' order.id %}" class="btn btn-danger">Удалить</a>
             </div>
         {% endfor %}
     {% endif %}
