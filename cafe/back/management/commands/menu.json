@@ -1,0 +1,18 @@
+[
+    {"model": "back.menuitem", "fields": {"name": "Пицца Сырная", "price": 1500}},
+    {"model": "back.menuitem", "fields": {"name": "Пицца с креветками", "price": 1900}},
+    {"model": "back.menuitem", "fields": {"name": "Пицца мясная", "price": 1750}},
+    {"model": "back.menuitem", "fields": {"name": "Пицца пеперони", "price": 1550}},
+    {"model": "back.menuitem", "fields": {"name": "Салат Цезарь", "price": 600}},
+    {"model": "back.menuitem", "fields": {"name": "Салат Оливье", "price": 400}},
+    {"model": "back.menuitem", "fields": {"name": "Салат Греческий", "price": 700}},
+    {"model": "back.menuitem", "fields": {"name": "Суп морской", "price": 900}},
+    {"model": "back.menuitem", "fields": {"name": "Борщ харчо с бараниной", "price": 920}},
+    {"model": "back.menuitem", "fields": {"name": "Паста карбонара", "price": 1050}},
+    {"model": "back.menuitem", "fields": {"name": "Паста Фетучини 'Песто'", "price": 1030}},
+    {"model": "back.menuitem", "fields": {"name": "Ассорти сыров", "price": 300}},
+    {"model": "back.menuitem", "fields": {"name": "Сельдь с картофелем", "price": 450}},
+    {"model": "back.menuitem", "fields": {"name": "Язык отварной с хреном", "price": 400}},
+    {"model": "back.menuitem", "fields": {"name": "Кофе американо", "price": 200}},
+    {"model": "back.menuitem", "fields": {"name": "Кофе капучино", "price": 200}}
+]
