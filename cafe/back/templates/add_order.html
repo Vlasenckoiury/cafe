@@ -1,0 +1,23 @@
+{% extends 'order_list.html' %}
+<!Doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Добавить заказ</title>
+</head>
+<body>
+    {% block add %}
+        <h1>Добавить новый заказ</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <li>{{ error }}</li>
+            <button type="submit">Отправить заказ</button>
+        </form>
+    {% endblock add %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'order_list.html' %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Статус</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <select name="status">
+            {% for key, value in cafe.STATUS_CHOICES %}
+                <option value="{{ key }}" {% if cafe.status == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Обновить</button>
+    </form>
+</body>
+</html>
