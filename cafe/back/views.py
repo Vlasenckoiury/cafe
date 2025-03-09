@@ -1,12 +1,21 @@
 from django.db import models
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q
+
 from .models import Cafe
 from .forms import OrderForm
 
 
 def order_list(request):  # Список заказов
+    query = request.GET.get('q')
     orders = Cafe.objects.all()
-    return render(request, 'order_list.html', {'orders': orders})
+
+    if query:
+        orders = orders.filter(
+            Q(table_number__icontains=query) | Q(status__icontains=query)
+        )
+
+    return render(request, 'order_list.html', {'cafes': orders, 'query': query})  # Передаем результаты и текст ввода
 
 
 def add_order(request):  # Добавить заказ

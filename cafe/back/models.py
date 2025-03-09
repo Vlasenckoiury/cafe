@@ -39,6 +39,6 @@ class Cafe(models.Model):
         return f"Стол {self.table_number}"
 
     def calculate_total_price(self):
-        """Пересчитывает общую стоимость заказа"""
+        # Пересчитывает общую стоимость заказа
         self.total_price = sum(item.price for item in self.items.all())
         self.save()

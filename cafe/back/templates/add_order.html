@@ -15,7 +15,6 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <li>{{ error }}</li>
             <button type="submit">Отправить заказ</button>
         </form>
     {% endblock add %}
