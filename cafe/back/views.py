@@ -1,9 +1,22 @@
 from django.db import models
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
+from .models import Cafe, MenuItem
+from .forms import OrderForm, CafeStatusForm
+from .serializers import CafeSerializer, MenuSerializer
+from rest_framework import viewsets
+import requests
+from django.shortcuts import render
 
-from .models import Cafe
-from .forms import OrderForm
+
+class CafeViewSet(viewsets.ModelViewSet):  # Представления кафе для drf
+    queryset = Cafe.objects.all()
+    serializer_class = CafeSerializer
+
+
+class MenuViewSet(viewsets.ModelViewSet): # Представления меню для drf
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuSerializer
 
 
 def order_list(request):  # Список заказов
@@ -15,34 +28,37 @@ def order_list(request):  # Список заказов
             Q(table_number__icontains=query) | Q(status__icontains=query)
         )
 
-    return render(request, 'order_list.html', {'cafes': orders, 'query': query})  # Передаем результаты и текст ввода
+    return render(request, 'order_list.html', {'orders': orders, 'query': query})  # Передаем результаты и текст ввода
 
 
 def add_order(request):  # Добавить заказ
     if request.method == 'POST':
         form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save()
+        if form.is_valid():  # валидация
+            order = form.save()  # сохраняем
             order.calculate_total_price()  # Вычисляем сумму заказа
-            return redirect('order_list')
+            return redirect('order_list')  # Редирект на главную страницу
     else:
         form = OrderForm()
     return render(request, 'add_order.html', {'form': form})
 
 
-def delete_order(request, order_id):  # Удалить заказ
-    order = get_object_or_404(Cafe, id=order_id)
-    order.delete()
+def delete_order(request, cafe_id):  # Удалить заказ
+    order = get_object_or_404(Cafe, id=cafe_id)
+    order.delete()  # удаляет по id заказ
     return redirect('order_list')
 
 
-def update_status(request, order_id):  # Статус заказа
-    order = get_object_or_404(Cafe, id=order_id)
+def update_status(request, cafe_id):  # Статус заказа
+    cafe = get_object_or_404(Cafe, id=cafe_id)
     if request.method == 'POST':
-        order.status = request.POST['status']
-        order.save()
-        return redirect('order_list')
-    return render(request, 'update_status.html', {'order': order})
+        form = CafeStatusForm(request.POST, instance=cafe)
+        if form.is_valid():
+            form.save()  # Сохраняем изменения
+            return redirect('order_list')  # Редирект на главную страницу
+    else:
+        form = CafeStatusForm(instance=cafe)
+    return render(request, 'update_status.html', {'form': form, 'cafe': cafe})
 
 
 def total_revenue(request):  # Расчет выручки

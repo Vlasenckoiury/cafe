@@ -11,7 +11,7 @@
 </head>
 <body>
 {% block cafe %}
-    {% if cafes %}
+    {% if orders %}
     <form method="get" action="{% url 'order_list' %}" class="mb-4">
         <div class="input-group">
             <input type="text" name="q" placeholder="Поиск по № стола или статусу" value="{{ query }}" class="form-control">
@@ -24,23 +24,23 @@
     {% if query %}
         <h2>Результаты поиска для "{{ query }}":</h2>
         <ul>
-            {% for order in cafes %}
+            {% for order in orders %}
                 <li>Стол №{{ order.table_number }} - Статус: {{ order.get_status_display }}</li>
             {% endfor %}
         </ul>
     {% else %}
         <h1>Список Заказов</h1>
-        {% for cafe in cafes %}
+        {% for order in orders %}
             <div class="order">
-                <p>Заказ {{ cafe.id }} - Стол {{ cafe.table_number }}</p>
+                <p>Заказ {{ order.id }} - Стол {{ order.table_number }}</p>
                 <p>Блюда:
-                    {% for item in cafe.items.all %}
+                    {% for item in order.items.all %}
                         {{ item.name }} - {{ item.price }} руб.;
                     {% endfor %}
                 </p>
-                <p>Общая стоимость: {{ cafe.total_price }} руб.</p>
-                <p>Статус: {{ cafe.get_status_display }}</p>
-                <a href="{% url 'update_status' cafe.id %}" class="btn btn-warning">Изменить статус</a>
+                <p>Общая стоимость: {{ order.total_price }} руб.</p>
+                <p>Статус: {{ order.get_status_display  }}</p>
+                <a href="{% url 'update_status' cafe.id%}" class="btn btn-warning">Изменить статус</a>
                 <a href="{% url 'delete_order' cafe.id %}" class="btn btn-danger">Удалить</a>
             </div>
         {% endfor %}
@@ -50,8 +50,8 @@
     {% endif %}
 
     {% block add %} {% endblock add %}
-    <a href="{% url 'add_order' %}">Добавить заказ</a>
-    <a href="{% url 'total_revenue' %}">Выручка</a>
+    <a href="{% url 'add_order' %}" class="btn btn-success">Добавить заказ</a>
+    <a href="{% url 'total_revenue' %}" class="btn btn-secondary">Выручка</a>
 {% endblock cafe %}
 </body>
 </html>

@@ -33,3 +33,12 @@ class OrderForm(forms.ModelForm):
                 if status in ['pending', 'ready']:  # Обработка ошибки по столику и статусу
                     raise ValidationError(f"Столик {table_num}уже занят, Выберите другой")
         return self
+
+
+class CafeStatusForm(forms.ModelForm):
+    class Meta:
+        model = Cafe
+        fields = ['status']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-control'}),
+        }
