@@ -20,16 +20,9 @@ class OrderForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'readonly': 'readonly'})  # Делаем поле только для чтения
     )
 
-    status = forms.CharField(
-        initial="pending",
-        disabled=True,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # Делаем поле только для чтения
-        label="Статус заказа"
-    )
-
     class Meta:
         model = Cafe
-        fields = ['table_number', 'items', 'status']
+        fields = ['table_number', 'items']
 
     def clean(self):
         table_num = self.cleaned_data.get('table_number')
