@@ -13,10 +13,10 @@
 <div class="container">
   <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Главная</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Добавить Заказ</a></li>
+      <li class="nav-item"><a href="" class="nav-link active" aria-current="page">Главная</a></li>
+      <li class="nav-item"><a href="{% url 'add_order' %}"  class="nav-link">Добавить Заказ</a></li>
       <li class="nav-item"><a href="#" class="nav-link">Меню</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">Выручка</a></li>
+      <li class="nav-item"><a href="{% url 'total_revenue' %}" class="nav-link">Выручка</a></li>
       <li class="nav-item"><a href="#" class="nav-link">О нас</a></li>
     </ul>
   </header>
@@ -32,24 +32,58 @@
             {% endif %}
         </div>
     </form>
-    <a href="{% url 'add_order' %}" class="btn btn-success">Добавить заказ</a>
-    <a href="{% url 'total_revenue' %}" class="btn btn-secondary">Выручка</a>
+    <form method="get" action="{% url 'order_list' %}" class="mb-4">
+        <select name="status_filter">
+            <option value="">Все статусы</option>
+            {% for value, label in status_choices %}
+                <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-success">Фильтровать</button>
+    </form>
     {% if query %}
         <h2>Результаты поиска для "{{ query }}":</h2>
         <ul>
             {% for order in orders %}
-            <li>
-                <p>Стол №{{ order.table_number }} - Статус: {{ order.get_status_display }}</p>
-                <p>Блюда:
-                    {% for item in order.items.all %}
-                    {{ item.name }} - {{ item.price }} руб.;
-                    {% endfor %}
-                </p>
-                <p>Общая стоимость: {{ order.total_price }} руб.</p>
-            </li>
-        {% endfor %}
+                <li>
+                    <p>Стол №{{ order.table_number }} - Статус: {{ order.get_status_display }}</p>
+                    <p>Блюда:
+                        {% for item in order.items.all %}
+                            {{ item.name }} - {{ item.price }} руб.;
+                        {% endfor %}
+                    </p>
+                    <p>Общая стоимость: {{ order.total_price }} руб.</p>
+                </li>
+            {% endfor %}
         </ul>
-    {% else %}
+    {% endif %}
+
+    <!-- Результаты фильтрации по статусу -->
+    {% if status_filter %}
+        <h2>Результаты для фильтра по статусу:
+            {% for value, label in status_choices %}
+                {% if status_filter == value %}
+                    {{ label }}
+                {% endif %}
+            {% endfor %}
+        </h2>
+        <ul>
+            {% for order in orders %}
+                <li>
+                    <p>Стол №{{ order.table_number }}</p>
+                    <p>Блюда:
+                        {% for item in order.items.all %}
+                            {{ item.name }} - {{ item.price }} руб.;
+                        {% endfor %}
+                    </p>
+                    <p>Общая стоимость: {{ order.total_price }} руб.</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if not query and not status_filter %}
         <h1>Список Заказов</h1>
         {% for order in orders %}
             <div class="order">
@@ -59,19 +93,20 @@
                         {{ item.name }} - {{ item.price }} руб.;
                     {% endfor %}
                 </p>
-                <a href="{% url 'menu_update' order.id %}" class="btn btn-primary">Изменить Меню</a>
                 <p>Общая стоимость: {{ order.total_price }} руб.</p>
                 <p>Статус: {{ order.get_status_display  }}</p>
                 <a href="{% url 'update_status' order.id %}" class="btn btn-warning">Изменить статус</a>
+                <a href="{% url 'menu_update' order.id %}" class="btn btn-primary">Изменить Меню</a>
                 <a href="{% url 'delete_order' order.id %}" class="btn btn-danger">Удалить</a>
             </div>
         {% endfor %}
     {% endif %}
+
     {% else %}
         <p>Вы пока что не добавили заказ</p>
     {% endif %}
 
-{% endblock cafe %}
+{% endblock  %}
 <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">

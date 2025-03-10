@@ -23,6 +23,7 @@ class MenuViewSet(viewsets.ModelViewSet): # Представления меню 
 
 def order_list(request):  # Список заказов
     query = request.GET.get('q')
+    status_filter = request.GET.get('status_filter')
     orders = Cafe.objects.all()
 
     if query:
@@ -30,7 +31,15 @@ def order_list(request):  # Список заказов
             Q(table_number__icontains=query) | Q(status__icontains=query)  # проверка на колонки на номер стола или статус
         )
 
-    return render(request, 'order_list.html', {'orders': orders, 'query': query})  # Передаем результаты и текст ввода
+    if status_filter:
+        orders = orders.filter(status=status_filter)
+
+    return render(request, 'order_list.html', {
+        'orders': orders,
+        'query': query,
+        'status_filter': status_filter,
+        'status_choices': Cafe.STATUS_CHOICES  # Передаем статусные выборы в шаблон
+    })  # Передаем результаты и текст ввода и фильтр статуса
 
 
 def add_order(request):  # Добавить заказ

@@ -34,7 +34,7 @@ class OrderForm(forms.ModelForm):
         status = self.cleaned_data.get('status')
 
         if table_num is not None:
-            table = Cafe.objects.filter(table_number=table_num).exclude(status='paid')  # Запрос к бд кафе
+            table = Cafe.objects.filter(table_number=table_num).exclude(status='paid')  # Запрос к бд кафе номер стола или статус
 
             if table.exists():
                 if status in ['pending', 'ready']:  # Обработка ошибки по столику и статусу
