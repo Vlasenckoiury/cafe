@@ -9,8 +9,10 @@
     <title>Общая выручка</title>
 </head>
 <body>
-    <a href="{% url 'order_list' %}" class="btn btn-secondary">На главную</a>
-    <h1>Общая выручка</h1>
-    <p>Общая выручка: {{ revenue|floatformat:2 }}</p>
+    <div class="total">
+        <a href="{% url 'order_list' %}" class="btn btn-secondary">На главную</a>
+        <h1>Общая выручка</h1>
+        <p>Общая выручка: {{ revenue|floatformat:2 }}</p>
+    </div>
 </body>
 </html>

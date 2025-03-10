@@ -50,7 +50,6 @@
         <p>Вы пока что не добавили заказ</p>
     {% endif %}
 
-    {% block add %} {% endblock add %}
     <a href="{% url 'add_order' %}" class="btn btn-success">Добавить заказ</a>
     <a href="{% url 'total_revenue' %}" class="btn btn-secondary">Выручка</a>
 {% endblock cafe %}

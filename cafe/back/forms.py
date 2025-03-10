@@ -32,7 +32,7 @@ class OrderForm(forms.ModelForm):
             if table.exists():
                 if status in ['pending', 'ready']:  # Обработка ошибки по столику и статусу
                     raise ValidationError(f"Столик {table_num}уже занят, Выберите другой")
-        return self
+        return self.cleaned_data
 
 
 class CafeStatusForm(forms.ModelForm):
