@@ -21,7 +21,7 @@
     </ul>
   </header>
 </div>
-<div class="container">
+<div class="container_error">
     {% if messages %}
         {% for message in messages %}
             <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
@@ -41,7 +41,7 @@
             {% endif %}
         </div>
     </form>
-    <form method="get" action="{% url 'order_list' %}" class="mb-4">
+    <form method="get" action="{% url 'order_list' %}" class="mb-5">
         <select name="status_filter">
             <option value="">Все статусы</option>
             {% for value, label in status_choices %}
@@ -56,13 +56,14 @@
         <ul>
             {% for order in orders %}
                 <li>
-                    <p>Стол №{{ order.table_number }} - Статус: {{ order.get_status_display }}</p>
-                    <p>Блюда:
+                    <p><b>ID Заказ:</b> {{ order.id }}</p>
+                    <p><b>Стол</b> №{{ order.table_number }} - Статус: {{ order.get_status_display }}</p>
+                    <p><b>Блюда:</b>
                         {% for item in order.items.all %}
                             {{ item.name }} - {{ item.price }} руб.;
                         {% endfor %}
                     </p>
-                    <p>Общая стоимость: {{ order.total_price }} руб.</p>
+                    <p><b>Общая стоимость:</b> {{ order.total_price }} руб.</p>
                 </li>
             {% endfor %}
         </ul>
@@ -80,13 +81,14 @@
         <ul>
             {% for order in orders %}
                 <li>
-                    <p>Стол №{{ order.table_number }}</p>
-                    <p>Блюда:
+                    <p><b>ID Заказ:</b> {{ order.id }}</p>
+                    <p><b>Стол</b> №{{ order.table_number }}</p>
+                    <p><b>Блюда:</b>
                         {% for item in order.items.all %}
                             {{ item.name }} - {{ item.price }} руб.;
                         {% endfor %}
                     </p>
-                    <p>Общая стоимость: {{ order.total_price }} руб.</p>
+                    <p><b>Общая стоимость:</b> {{ order.total_price }} руб.</p>
                 </li>
             {% endfor %}
         </ul>
@@ -96,14 +98,19 @@
         <h1>Список Заказов</h1>
         {% for order in orders %}
             <div class="order">
-                <p>ID заказ №{{ order.id }} - Стол {{ order.table_number }}</p>
-                <p>Блюда:
+                <p><b>ID Заказ:</b> {{ order.id }}</p>
+                <p><b>Стол:</b> {{ order.table_number }}</p>
+                <p><b>Блюда:</b>
                     {% for item in order.items.all %}
                         {{ item.name }} - {{ item.price }} руб.;
                     {% endfor %}
                 </p>
-                <p>Общая стоимость: {{ order.total_price }} руб.</p>
-                <p>Статус: {{ order.get_status_display  }}</p>
+                <p><b>Общая стоимость:</b> {{ order.total_price }} руб.</p>
+                <p><b>Статус:</b>
+                    <span class="{% if order.status == 'pending' %}status-pending{% elif order.status == 'ready' %}status-ready{% elif order.status == 'paid' %}status-paid{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                </p>
                 <a href="{% url 'update_status' order.id %}" class="btn btn-warning">Изменить статус</a>
                 <a href="{% url 'menu_update' order.id %}" class="btn btn-primary">Изменить Меню</a>
                 <a href="{% url 'delete_order' order.id %}" class="btn btn-danger">Удалить</a>
@@ -112,7 +119,7 @@
     {% endif %}
 
     {% else %}
-        <p>Вы пока что не добавили заказ</p>
+        <p class="no_text">Вы пока что не добавили заказ</p>
     {% endif %}
 
 {% endblock  %}

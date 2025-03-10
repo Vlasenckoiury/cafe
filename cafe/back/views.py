@@ -102,7 +102,7 @@ def menu_update(request, cafe_id):
             messages.error(request, "Ошибка.")  # Ловит любые ошибки
     else:
         form = MenuUpdateForm(instance=cafe)  # для гет-запроса создаем форму с текущим статусом
-    return render(request, 'update_status.html', {'form': form, 'cafe': cafe})
+    return render(request, 'menu_update.html', {'form': form, 'cafe': cafe})
 
 
 def menu(request):

@@ -15,13 +15,14 @@ class OrderForm(forms.ModelForm):
         max_digits=10,
         decimal_places=2,
         required=False,
+        disabled=True,
         widget=forms.TextInput(attrs={'readonly': 'readonly'})  # Делаем поле только для чтения
     )
 
     status = forms.CharField(
         initial="В ожидании",
         disabled=True,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}), # Делаем поле только для чтения
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # Делаем поле только для чтения
         label="Статус заказа"
     )
 

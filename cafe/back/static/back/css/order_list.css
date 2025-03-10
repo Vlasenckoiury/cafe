@@ -1,0 +1,55 @@
+.mb-4 {
+    width: 450px;
+    margin: 0 auto;
+}
+.mb-4 .input-group {
+    border: 2px solid #9b8b8b;
+    border-radius: 5px;
+}
+
+.mb-5 {
+    width: 450px;
+    margin: 0 auto;
+}
+
+.mb-5 select {
+    width: 202px;
+    height: 32px;
+    border: 2px solid #9b8b8b;
+    border-radius: 5px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+.order {
+    padding: 20px;
+    width: 804px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 2px solid #7160fd;
+    border-radius: 10px;
+}
+
+.order p {
+    font-size: x-large;
+}
+
+.status-pending {
+    color: orange; /* Цвет для статуса "В ожидании" */
+}
+
+.status-ready {
+    color: green; /* Цвет для статуса "Готово" */
+}
+
+.status-paid {
+    color: blue; /* Цвет для статуса "Оплачено" */
+}
+
+.order .btn {
+    margin-right: 15px;
+}
