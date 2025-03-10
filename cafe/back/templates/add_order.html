@@ -12,14 +12,25 @@
 </head>
 <body>
 <div class="container">
-  <header class="d-flex justify-content-center py-3">
+<header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
-      <li class="nav-item"><a href="{% url 'order_list' %}" class="nav-link active" aria-current="page">Главная</a></li>
-      <li class="nav-item"><a href="{% url 'add_order' %}"  class="nav-link">Добавить Заказ</a></li>
-      <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link">Меню</a></li>
-      <li class="nav-item"><a href="{% url 'total_revenue' %}" class="nav-link">Выручка</a></li>
+        <li class="nav-item"><a href="{% url 'order_list' %}" class="nav-link active" aria-current="page">Главная</a></li>
+        <li class="nav-item"><a href="{% url 'add_order' %}"  class="nav-link">Добавить Заказ</a></li>
+        <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link">Меню</a></li>
+        <li class="nav-item"><a href="{% url 'total_revenue' %}" class="nav-link">Выручка</a></li>
     </ul>
-  </header>
+</header>
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 </div>
     {% block add %}
         <div class="add">

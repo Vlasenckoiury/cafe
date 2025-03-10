@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import Cafe, MenuItem
 from django.core.exceptions import ValidationError
 
@@ -20,7 +21,7 @@ class OrderForm(forms.ModelForm):
     )
 
     status = forms.CharField(
-        initial="В ожидании",
+        initial="pending",
         disabled=True,
         widget=forms.TextInput(attrs={'readonly': 'readonly'}),  # Делаем поле только для чтения
         label="Статус заказа"
@@ -39,7 +40,7 @@ class OrderForm(forms.ModelForm):
 
             if table.exists():
                 if status in ['pending', 'ready']:  # Обработка ошибки по столику и статусу
-                    raise ValidationError(f"Столик {table_num}уже занят, Выберите другой")
+                    raise ValidationError(f"Столик {table_num} уже занят, выберите другой")
         return self.cleaned_data
 
 
