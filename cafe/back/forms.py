@@ -18,6 +18,13 @@ class OrderForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'readonly': 'readonly'})  # Делаем поле только для чтения
     )
 
+    status = forms.CharField(
+        initial="В ожидании",
+        disabled=True,
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+        label="Статус заказа"
+    )
+
     class Meta:
         model = Cafe
         fields = ['table_number', 'items', 'status']
