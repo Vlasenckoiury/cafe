@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Update_menu</title>
+</head>
+<body>
+    <div class="update-menu">
+        <a href="{% url 'order_list' %}" class="btn btn-secondary">На главную</a>
+        <div class="container mt-5">
+            <h1>Изменить статус заказа №{{ cafe.id }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
