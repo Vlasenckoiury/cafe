@@ -21,7 +21,7 @@ class OrderForm(forms.ModelForm):
     status = forms.CharField(
         initial="В ожидании",
         disabled=True,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+        widget=forms.TextInput(attrs={'readonly': 'readonly'}), # Делаем поле только для чтения
         label="Статус заказа"
     )
 
