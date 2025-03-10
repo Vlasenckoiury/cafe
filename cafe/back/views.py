@@ -24,7 +24,7 @@ class MenuViewSet(viewsets.ModelViewSet): # Представления меню 
 def order_list(request):  # Список заказов
     query = request.GET.get('q')
     status_filter = request.GET.get('status_filter')
-    orders = Cafe.objects.all()
+    orders = Cafe.objects.all().order_by('id')
 
     if query:  # Если поле вода поиска
         orders = orders.filter(
