@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 
 from .models import Cafe, MenuItem
-from .forms import OrderForm, CafeStatusForm, MenuForm
+from .forms import OrderForm, CafeStatusForm, MenuUpdateForm, MenuForm
 from .serializers import CafeSerializer, MenuSerializer
 from rest_framework import viewsets
 import requests
@@ -26,20 +26,23 @@ def order_list(request):  # Список заказов
     status_filter = request.GET.get('status_filter')
     orders = Cafe.objects.all()
 
-    if query:
+    if query:  # Если поле вода поиска
         orders = orders.filter(
-            Q(table_number__icontains=query) | Q(status__icontains=query)  # проверка на колонки на номер стола или статус
+            Q(table_number__icontains=query) | Q(status__icontains=query)  # фильтр по на номеру стола или статусу
         )
 
-    if status_filter:
+    if status_filter:  # Если фильтры
         orders = orders.filter(status=status_filter)
+
+    if not orders.exists():  # Если заказы не найдены
+        messages.error(request, "Ничего не найдено")
 
     return render(request, 'order_list.html', {
         'orders': orders,
         'query': query,
-        'status_filter': status_filter,
-        'status_choices': Cafe.STATUS_CHOICES  # Передаем статусные выборы в шаблон
-    })  # Передаем результаты и текст ввода и фильтр статуса
+        'status_filter': status_filter,  # Передает
+        'status_choices': Cafe.STATUS_CHOICES  # Передаем статусы в шаблон(то есть загружаем из модели статусы)
+    })  # Передаем результаты, текст ввода, фильтр статуса и
 
 
 def add_order(request):  # Добавить заказ
@@ -87,7 +90,7 @@ def update_status(request, cafe_id):  # Статус заказа
 def menu_update(request, cafe_id):
     cafe = get_object_or_404(Cafe, id=cafe_id)
     if request.method == 'POST':
-        form = MenuForm(request.POST, instance=cafe)
+        form = MenuUpdateForm(request.POST, instance=cafe)
         if form.is_valid():
             try:
                 form.save()  # сохраняем обновленный статус
@@ -98,8 +101,24 @@ def menu_update(request, cafe_id):
             print("Форма не валидна.")
             messages.error(request, "Ошибка.")  # Ловит любые ошибки
     else:
-        form = MenuForm(instance=cafe)  # для гет-запроса создаем форму с текущим статусом
+        form = MenuUpdateForm(instance=cafe)  # для гет-запроса создаем форму с текущим статусом
     return render(request, 'update_status.html', {'form': form, 'cafe': cafe})
+
+
+def menu(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST)
+        try:
+            form.save()
+            messages.success(request, "Меню")  # Успешно добавлено
+            print('Вывод меню')
+            return redirect('order_list')  # редирект на главную страницу
+        except Exception as e:
+            messages.error(request, "Ошибка при загрузки меню")  # Ловит любые ошибки
+            print("Ошибка при загрузки меню")
+    else:
+        form = MenuForm()
+    return render(request, 'menu.html', {'form': form})
 
 
 def total_revenue(request):  # Расчет выручки

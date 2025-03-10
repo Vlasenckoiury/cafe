@@ -9,11 +9,30 @@
     <title>Общая выручка</title>
 </head>
 <body>
+<div class="container">
+  <header class="d-flex justify-content-center py-3">
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{% url 'order_list' %}" class="nav-link active" aria-current="page">Главная</a></li>
+      <li class="nav-item"><a href="{% url 'add_order' %}"  class="nav-link">Добавить Заказ</a></li>
+      <li class="nav-item"><a href="{% url 'menu' %}" class="nav-link">Меню</a></li>
+      <li class="nav-item"><a href="{% url 'total_revenue' %}" class="nav-link">Выручка</a></li>
+    </ul>
+  </header>
+</div>
     <div class="total">
-        <a href="{% url 'order_list' %}" class="btn btn-secondary">На главную</a>
         <h1>Общая выручка</h1>
-        <p>Со статусом Оплачено</p>
+        <p>Со статусом: Оплачено</p>
         <p>Общая выручка: {{ revenue|floatformat:2 }}</p>
     </div>
+<div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Компания, Inc</span>
+        </div>
+    </footer>
+</div>
 </body>
 </html>

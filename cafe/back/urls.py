@@ -15,5 +15,6 @@ urlpatterns = [
     path('delete/<int:cafe_id>/', views.delete_order, name='delete_order'),
     path('update/<int:cafe_id>/', views.update_status, name='update_status'),
     path('update_menu/<int:cafe_id>/', views.menu_update, name='menu_update'),
+    path('menu/', views.menu, name='menu'),
     path('revenue/', views.total_revenue, name='total_revenue'),
 ]

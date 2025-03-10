@@ -48,12 +48,23 @@ class CafeStatusForm(forms.ModelForm):
         fields = ['status']
 
 
-class MenuForm(forms.ModelForm):
+class MenuUpdateForm(forms.ModelForm):
     items = forms.ModelMultipleChoiceField(
         queryset=MenuItem.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         label="Выберите блюда",
         required=True
+    )
+
+    class Meta:
+        model = Cafe
+        fields = ['items']
+
+
+class MenuForm(forms.ModelForm):
+    items = forms.ModelMultipleChoiceField(
+        queryset=MenuItem.objects.all(),
+        label="Меню",
     )
 
     class Meta:
