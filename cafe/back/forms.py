@@ -39,6 +39,16 @@ class CafeStatusForm(forms.ModelForm):
     class Meta:
         model = Cafe
         fields = ['status']
-        widgets = {
-            'status': forms.Select(attrs={'class': 'form-control'}),
-        }
+
+
+class MenuForm(forms.ModelForm):
+    items = forms.ModelMultipleChoiceField(
+        queryset=MenuItem.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label="Выберите блюда",
+        required=True
+    )
+
+    class Meta:
+        model = Cafe
+        fields = ['items']

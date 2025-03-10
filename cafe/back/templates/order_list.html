@@ -38,6 +38,7 @@
                         {{ item.name }} - {{ item.price }} руб.;
                     {% endfor %}
                 </p>
+                <a href="{% url 'menu_update' order.id %}" class="btn btn-primary">Изменить Меню</a>
                 <p>Общая стоимость: {{ order.total_price }} руб.</p>
                 <p>Статус: {{ order.get_status_display  }}</p>
                 <a href="{% url 'update_status' order.id %}" class="btn btn-warning">Изменить статус</a>
