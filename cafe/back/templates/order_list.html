@@ -21,12 +21,22 @@
             {% endif %}
         </div>
     </form>
+    <a href="{% url 'add_order' %}" class="btn btn-success">Добавить заказ</a>
+    <a href="{% url 'total_revenue' %}" class="btn btn-secondary">Выручка</a>
     {% if query %}
         <h2>Результаты поиска для "{{ query }}":</h2>
         <ul>
             {% for order in orders %}
-                <li>Стол №{{ order.table_number }} - Статус: {{ order.get_status_display }}</li>
-            {% endfor %}
+            <li>
+                <p>Стол №{{ order.table_number }} - Статус: {{ order.get_status_display }}</p>
+                <p>Блюда:
+                    {% for item in order.items.all %}
+                    {{ item.name }} - {{ item.price }} руб.;
+                    {% endfor %}
+                </p>
+                <p>Общая стоимость: {{ order.total_price }} руб.</p>
+            </li>
+        {% endfor %}
         </ul>
     {% else %}
         <h1>Список Заказов</h1>
@@ -50,8 +60,6 @@
         <p>Вы пока что не добавили заказ</p>
     {% endif %}
 
-    <a href="{% url 'add_order' %}" class="btn btn-success">Добавить заказ</a>
-    <a href="{% url 'total_revenue' %}" class="btn btn-secondary">Выручка</a>
 {% endblock cafe %}
 </body>
 </html>
