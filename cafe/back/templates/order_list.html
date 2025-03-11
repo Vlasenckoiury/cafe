@@ -53,17 +53,18 @@
     </form>
     {% if query %}
         <h2>Результаты поиска для "{{ query }}":</h2>
-        <ul>
+        <ul class="order-list">
             {% for order in orders %}
-                <li>
+                <li class="order-item">
                     <p><b>ID Заказ:</b> {{ order.id }}</p>
                     <p><b>Стол</b> №{{ order.table_number }} - Статус: {{ order.get_status_display }}</p>
-                    <p><b>Блюда:</b>
+                    <p><b>Блюда:</b></p>
+                    <ul class="dish-list">
                         {% for item in order.items.all %}
-                            {{ item.name }} - {{ item.price }} руб.;
+                            <li>{{ item.name }} - {{ item.price }} руб.</li>
                         {% endfor %}
-                    </p>
-                    <p><b>Общая стоимость:</b> {{ order.total_price }} руб.</p>
+                    </ul>
+                    <p class="total-price"><b>Общая стоимость:</b> {{ order.total_price }} руб.</p>
                 </li>
             {% endfor %}
         </ul>
