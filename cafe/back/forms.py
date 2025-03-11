@@ -11,14 +11,6 @@ class OrderForm(forms.ModelForm):
         label="Выберите блюда",
         required=True
     )
-    total_price = forms.DecimalField(
-        label="Итоговая цена",
-        max_digits=10,
-        decimal_places=2,
-        required=False,
-        disabled=True,
-        widget=forms.TextInput(attrs={'readonly': 'readonly'})  # Делаем поле только для чтения
-    )
 
     class Meta:
         model = Cafe
